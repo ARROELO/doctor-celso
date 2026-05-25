@@ -1,0 +1,37 @@
+---
+const servicios = [
+  {
+    number: '01',
+    title: 'Ginecología general',
+    text: 'Revisiones, citologías, ecografías y seguimiento integral en todas las etapas vitales.',
+  },
+  {
+    number: '02',
+    title: 'Consulta 60+',
+    text: 'Atención especializada a menopausia, sequedad, sexualidad, suelo pélvico y bienestar en la madurez.',
+  },
+  {
+    number: '03',
+    title: 'Prevención',
+    text: 'Detección precoz, control hormonal y consejo médico personalizado para cada edad.',
+  },
+];
+---
+
+<section id="servicios" class="servicios">
+  <div class="container">
+    <div class="servicios__header">
+      <p class="section-label">Servicios</p>
+      <h2 class="section-title">Atención médica integral en cada etapa.</h2>
+    </div>
+    <div class="servicios__grid">
+      {servicios.map((servicio) => (
+        <article class="servicio-card">
+          <p class="servicio-card__number">{servicio.number}</p>
+          <h3 class="servicio-card__title">{servicio.title}</h3>
+          <p class="servicio-card__text">{servicio.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+  </section>

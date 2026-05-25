@@ -1,0 +1,53 @@
+---
+const videos = [
+  {
+    tag: 'Menopausia · 60+',
+    title: 'Atrofia vaginal en la madurez',
+  },
+  {
+    tag: 'Educación',
+    title: 'Mitos de la ginecología 60+',
+  },
+  {
+    tag: 'Prevención',
+    title: 'Revisiones que sí importan',
+  },
+  {
+    tag: 'Sin tabú',
+    title: 'Hablemos de sexualidad',
+  },
+];
+---
+
+<section id="instagram" class="instagram">
+  <div class="container">
+    <div class="instagram__header">
+      <div>
+        <p class="section-label">Respuestas en vídeo</p>
+        <h2 class="section-title">Cada semana en @arroelo</h2>
+      </div>
+      <a
+        href="https://instagram.com/arroelo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="instagram__link"
+      >
+        Seguir en Instagram →
+      </a>
+    </div>
+    <div class="instagram__grid">
+      {videos.map((video) => (
+        <a
+          href="https://instagram.com/arroelo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="instagram-card"
+        >
+          <span class="instagram-card__tag">{video.tag}</span>
+          <h3 class="instagram-card__title">{video.title}</h3>
+          <span class="instagram-card__cta">Ver en Instagram</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

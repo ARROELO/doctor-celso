@@ -1,0 +1,16 @@
+{
+  "name": "dr-celso-web",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^8.3.4",
+    "astro": "^4.16.18",
+    "resend": "^4.5.1"
+  }
+}

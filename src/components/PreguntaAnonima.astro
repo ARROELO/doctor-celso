@@ -1,0 +1,115 @@
+---
+---
+
+<section id="pregunta" class="pregunta">
+  <div class="container">
+    <div class="pregunta__box">
+
+      <div class="pregunta__header">
+        <p class="section-label">Tu pregunta, sin filtros</p>
+        <h2 class="pregunta__title">Consulte sin reservas.</h2>
+        <p class="pregunta__desc">
+          Escribe la duda que nunca te has atrevido a preguntar. El Dr. Celso la
+          responderá en uno de sus próximos vídeos de Instagram
+          <a href="https://instagram.com/arroelo" target="_blank" rel="noopener noreferrer">@arroelo</a>,
+          sin revelar tu identidad.
+        </p>
+      </div>
+
+      <form class="pregunta__form" id="pregunta-form" novalidate>
+        <label for="pregunta-texto">Su pregunta (totalmente anónima)</label>
+        <textarea
+          id="pregunta-texto"
+          name="pregunta"
+          rows="5"
+          required
+          minlength="10"
+          placeholder="Ej. Tengo 65 años y siento molestias durante las relaciones. ¿Es normal? ¿Hay tratamiento?"
+        ></textarea>
+
+        <div class="pregunta__row">
+          <div>
+            <label for="pregunta-edad">Edad (opcional)</label>
+            <input
+              type="number"
+              id="pregunta-edad"
+              name="edad"
+              min="18"
+              max="120"
+              placeholder="Ej. 64"
+            />
+          </div>
+          <button type="submit" class="btn btn--navy pregunta__submit" id="pregunta-submit">
+            Enviar pregunta
+          </button>
+        </div>
+
+        <p class="pregunta__disclaimer">
+          No guardamos tu nombre, correo, IP ni ningún dato identificable.
+        </p>
+
+        <div id="pregunta-message" class="pregunta__message" hidden></div
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('pregunta-form') as HTMLFormElement;
+  const messageEl = document.getElementById('pregunta-message') as HTMLDivElement;
+  const submitBtn = document.getElementById('pregunta-submit') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const pregunta = (document.getElementById('pregunta-texto') as HTMLTextAreaElement).value.trim();
+    const edadInput = document.getElementById('pregunta-edad') as HTMLInputElement;
+    const edad = edadInput.value ? Number(edadInput.value) : undefined;
+
+    messageEl.hidden = true;
+    messageEl.className = 'pregunta__message';
+
+    if (pregunta.length < 10) {
+      messageEl.textContent = 'La pregunta debe tener al menos 10 caracteres.';
+      messageEl.classList.add('pregunta__message--error');
+      messageEl.hidden = false;
+      return;
+    }
+
+    if (edad !== undefined && (edad < 18 || edad > 120)) {
+      messageEl.textContent = 'La edad debe estar entre 18 y 120 años.';
+      messageEl.classList.add('pregunta__message--error');
+      messageEl.hidden = false;
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    try {
+      const response = await fetch('/api/pregunta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pregunta, edad }),
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        messageEl.textContent = 'Pregunta enviada correctamente. Gracias por confiar.';
+        messageEl.classList.add('pregunta__message--success');
+        form.reset();
+      } else {
+        messageEl.textContent = data.error || 'No se pudo enviar la pregunta. Inténtalo de nuevo.';
+        messageEl.classList.add('pregunta__message--error');
+      }
+    } catch {
+      messageEl.textContent = 'Error de conexión. Inténtalo de nuevo más tarde.';
+      messageEl.classList.add('pregunta__message--error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar pregunta';
+      messageEl.hidden = false;
+    }
+  });
+</script>

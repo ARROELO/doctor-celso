@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+import '../styles/global.css';
+import '../styles/components.css';
+
+const {
+  title = 'Dr. Celso Rodríguez Martín — Ginecología y Obstetricia',
+  description = 'Iniciativa 60+ del Dr. Celso Rodríguez Martín. Ginecología y obstetricia con visión humana en Vilagarcía de Arousa.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpeg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

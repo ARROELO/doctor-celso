@@ -1,0 +1,44 @@
+---
+---
+
+<header class="header">
+  <div class="header__inner">
+    <a href="/" class="header__brand">
+      <img src="/images/logo.png" alt="Dr. Celso" class="header__logo" width="64" height="64" />
+    </a>
+
+    <button
+      class="header__toggle"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      id="nav-toggle"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="header__nav" id="nav-menu">
+      <a href="#pregunta" class="btn btn--navy">Pregunta anónima</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('is-open');
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      menu?.classList.remove('is-open');
+    });
+  });
+</script>
